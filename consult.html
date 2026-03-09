@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>芯 · 咨询室</title>
+    <!-- Font Awesome 6 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+        }
+
+        body {
+            background-color: #e6f3e6;
+            color: #1e3a2e;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 2rem;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 页头（简版，可返回首页） */
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border: 2px solid #b1dfb1;
+        }
+        .chat-header a {
+            color: #1b6231;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .chat-header h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1b4e2b;
+            margin-left: 1rem;
+        }
+        .chat-header i {
+            font-size: 1.4rem;
+        }
+
+        /* 聊天卡片 */
+        .chat-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 2px solid #b1dfb1;
+            box-shadow: 0 12px 28px -12px #1e4a2e;
+            display: flex;
+            flex-direction: column;
+            height: 70vh;
+            max-height: 700px;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        /* 聊天消息区域 */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            scroll-behavior: smooth;
+        }
+
+        /* 消息行 */
+        .message-row {
+            display: flex;
+            width: 100%;
+        }
+        .message-row.user {
+            justify-content: flex-end;
+        }
+        .message-row.assistant {
+            justify-content: flex-start;
+        }
+
+        /* 消息气泡 */
+        .message-bubble {
+            max-width: 70%;
+            padding: 1rem 1.4rem;
+            border-radius: 28px;
+            font-size: 1rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            box-shadow: 0 4px 8px rgba(0, 30, 0, 0.1);
+            position: relative;
+        }
+        .user .message-bubble {
+            background: linear-gradient(145deg, #daf4da, #b6e3b6);
+            color: #1e4a2e;
+            border: 2px solid #9fd0a0;
+            border-bottom-right-radius: 6px;
+        }
+        .assistant .message-bubble {
+            background: white;
+            color: #1e3a2e;
+            border: 2px solid #c6e2c6;
+            border-bottom-left-radius: 6px;
+        }
+
+        /* 消息时间 */
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+            text-align: right;
+        }
+
+        /* 输入区域 */
+        .chat-input-area {
+            display: flex;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.8);
+            border-top: 2px solid #b1dfb1;
+            gap: 0.8rem;
+            backdrop-filter: blur(8px);
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #b1dfb1;
+            border-radius: 60px;
+            font-size: 1rem;
+            outline: none;
+            background: white;
+            transition: 0.2s;
+        }
+        .chat-input-area input:focus {
+            border-color: #3f8850;
+            box-shadow: 0 0 0 3px rgba(80,160,90,0.2);
+        }
+        .chat-input-area button {
+            background: linear-gradient(145deg, #3a8b4f, #1f6735);
+            border: none;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            border: 2px solid #b1e3b1;
+            box-shadow: 0 4px 12px #256b3980;
+        }
+        .chat-input-area button:hover {
+            background: linear-gradient(145deg, #479e5d, #2a7a40);
+            transform: scale(1.05);
+        }
+
+        /* 底部小提示 */
+        .footer-note {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #3b6b4b;
+            font-weight: 500;
+            background: #daf0da;
+            padding: 0.8rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            border: 1px solid #a0caa0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            .chat-header h1 {
+                font-size: 1.3rem;
+            }
+            .message-bubble {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页头，含返回首页链接 -->
+        <div class="chat-header">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> 返回首页</a>
+            <h1><i class="fas fa-comment-dots" style="color: #3f8850;"></i> 芯·咨询室</h1>
+        </div>
+
+        <!-- 聊天卡片 -->
+        <div class="chat-card">
+            <!-- 消息展示区 -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- 初始消息会通过JS动态插入，此处留空 -->
+            </div>
+
+            <!-- 输入区 -->
+            <div class="chat-input-area">
+                <input type="text" id="messageInput" placeholder="输入你的消息..." autocomplete="off">
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- 底部提示 -->
+        <div class="footer-note">
+            <i class="fas fa-leaf"></i> 消息仅当前展示，刷新即重置 <i class="fas fa-leaf"></i>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // 获取DOM元素
+            const messagesContainer = document.getElementById('chatMessages');
+            const inputField = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+
+            // 预置示例对话（刷新后重新加载这些消息）
+            const initialMessages = [
+                { role: 'assistant', text: '你好，我是你的心理陪伴助手。有什么想聊聊的吗？', time: '10:00' },
+                { role: 'user', text: '最近总是失眠，感觉很焦虑。', time: '10:01' },
+                { role: 'assistant', text: '听起来你最近压力比较大。可以试着做一些放松练习，比如深呼吸。你愿意具体说说吗？', time: '10:02' },
+            ];
+
+            // 格式化当前时间（时:分）
+            function getCurrentTime() {
+                const now = new Date();
+                return `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+            }
+
+            // 渲染一条消息
+            function appendMessage(role, text, time = null) {
+                const messageTime = time || getCurrentTime();
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message-row ${role}`;
+                messageDiv.innerHTML = `
+                    <div class="message-bubble">
+                        ${text}
+                        <div class="message-time">${messageTime}</div>
+                    </div>
+                `;
+                messagesContainer.appendChild(messageDiv);
+                // 自动滚动到底部
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            // 加载初始消息
+            function loadInitialMessages() {
+                messagesContainer.innerHTML = ''; // 清空
+                initialMessages.forEach(msg => {
+                    appendMessage(msg.role, msg.text, msg.time);
+                });
+            }
+
+            // 发送消息（用户）
+            function sendUserMessage() {
+                const text = inputField.value.trim();
+                if (text === '') return;
+
+                // 添加用户消息
+                appendMessage('user', text);
+
+                // 清空输入框
+                inputField.value = '';
+
+                // 模拟咨询师自动回复（简单延时）
+                setTimeout(() => {
+                    // 可以简单回复固定内容，也可以根据用户消息简单变化
+                    const replyText = '感谢你的分享，我在这里陪着你。可以再多说一些吗？';
+                    appendMessage('assistant', replyText);
+                }, 600); // 0.6秒后回复，模拟思考
+            }
+
+            // 事件绑定
+            sendBtn.addEventListener('click', sendUserMessage);
+            inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendUserMessage();
+                }
+            });
+
+            // 初始化：加载预置对话
+            loadInitialMessages();
+
+            // 注意：刷新页面后所有消息丢失，因为未使用localStorage，完全符合要求
+        })();
+    </script>
+</body>
+</html>

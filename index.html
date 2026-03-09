@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>芯 · 心理</title>
+    <!-- Font Awesome 6 图标库 -->
+    <link rel="icon" href="./icon/黑色单logo.svg" type="image/svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+        }
+
+        body {
+            background-color: #e6f3e6;
+            color: #1e3a2e;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 3rem;
+        }
+
+        /* ----- 顶部栏 (深绿色) ----- */
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: #2b6e3f;
+            color: #f0ffe0;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            border: 1px solid #7fb482;
+            box-shadow: 0 4px 8px rgba(0, 40, 0, 0.2);
+        }
+
+        .top-bar a {
+            color: #f0ffe0;
+            text-decoration: none;
+            margin-left: 1rem;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+
+        .top-bar a:hover {
+            color: #ffefc0;
+            text-decoration: underline;
+        }
+
+        .top-bar i {
+            margin-right: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .top-bar .divider {
+            margin: 0 0.8rem;
+            color: #a8d5a8;
+            opacity: 0.7;
+        }
+
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+        }
+
+        /* ----- 主站点页头 (带Logo、导航、按钮) ----- */
+        .site-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            margin-bottom: 2.2rem;
+            border: 2px solid #b1dfb1;
+            box-shadow: 0 8px 18px -8px #2f5a4b33;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1b6b3b;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: linear-gradient(145deg, #3a8b4f, #206f3a);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 10px #2d7241;
+            border: 2px solid #efffef;
+        }
+
+        .logo-text {
+            letter-spacing: -0.5px;
+            margin-left: 5px;
+        }
+
+        .main-nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #1e4e2e;
+            font-weight: 600;
+            font-size: 1.15rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 30px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .main-nav a:hover {
+            background-color: #c3e6c3;
+            color: #0c3b1f;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .btn-login {
+            background-color: white;
+            border: 2px solid #3f8b50;
+            color: #1b6231;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: 0.15s;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,60,0,0.1);
+        }
+
+        .btn-login:hover {
+            background-color: #ebffeb;
+            border-color: #206f3a;
+            transform: scale(1.02);
+        }
+
+        .btn-signup {
+            background-color: #33854a;
+            border: 2px solid #1f6735;
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: 0.15s;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px #256b3980;
+        }
+
+        .btn-signup:hover {
+            background-color: #479e5d;
+            border-color: #125a28;
+        }
+
+        /* ----- 轮播图 ----- */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 340px;
+            background: linear-gradient(135deg, #5f9e6b, #2f6d4a);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px -8px rgba(30, 58, 46, 0.3);
+            margin-bottom: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: white;
+            text-shadow: 0 2px 6px #1e3a2e;
+            padding: 2rem;
+            background: radial-gradient(circle at 20% 40%, rgba(255,255,240,0.15) 0%, transparent 50%);
+        }
+
+        .carousel-slide h2 {
+            font-size: 2.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .carousel-slide p {
+            font-size: 1.3rem;
+            max-width: 70%;
+            text-align: center;
+            background-color: rgba(30, 58, 46, 0.3);
+            padding: 0.5rem 1.8rem;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: default;
+            border: 1px solid rgba(255,255,240,0.5);
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+
+        .carousel-arrow-left { left: 24px; }
+        .carousel-arrow-right { right: 24px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 14px;
+            z-index: 5;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            transition: 0.2s;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .dot.active {
+            background-color: white;
+            width: 32px;
+            background-color: #d0efb1;
+            border: 2px solid #1e6b3b;
+        }
+
+        /* ----- 四大功能模块 ----- */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.8rem;
+            margin: 2.8rem 0 4rem;
+        }
+
+        .module-card {
+            display: flex;
+            align-items: center;
+            background-color: #ffffffda;
+            backdrop-filter: blur(2px);
+            padding: 1.4rem 1rem 1.4rem 1.2rem;
+            border-radius: 28px;
+            text-decoration: none;
+            color: #1e3a2e;
+            border: 2px solid #b1dfb1;
+            box-shadow: 0 10px 18px -8px #2f5a4b66;
+            transition: all 0.2s ease;
+            height: 100%;
+            border-left: 6px solid #3f8850;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            background-color: white;
+            border-color: #2b7340;
+            box-shadow: 0 20px 25px -10px #23503a;
+        }
+
+        .module-icon {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #daf4da, #b6e3b6);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 2.4rem;
+            color: #20683b;
+            border: 2px solid white;
+            box-shadow: 0 4px 8px rgba(0, 60, 20, 0.15);
+        }
+
+        .module-text h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            color: #1b4e2b;
+        }
+
+        .module-text p {
+            font-size: 0.95rem;
+            color: #2e5e3e;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* ----- 推荐内容区域 ----- */
+        .recommend-section {
+            margin-top: 3.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1b4e2b;
+            padding-left: 0.8rem;
+            border-left: 8px solid #529e64;
+            margin-bottom: 2rem;
+            letter-spacing: -0.3px;
+        }
+
+        .recommend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .recommend-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 1.2rem 2rem 1.2rem 1.5rem;
+            border: 1px solid #a8d5a8;
+            box-shadow: 0 8px 18px -6px #2b5d3b50;
+            transition: 0.15s;
+            cursor: default;
+        }
+
+        .recommend-item:hover {
+            background: white;
+            border-color: #529e64;
+            box-shadow: 0 12px 22px -8px #25633b;
+        }
+
+        .recommend-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: #c6eac6;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 2rem;
+            font-size: 2.6rem;
+            color: #1e6738;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px #2e6b3e;
+        }
+
+        .recommend-content {
+            flex: 1;
+        }
+
+        .recommend-content h4 {
+            font-size: 1.5rem;
+            font-weight: 650;
+            color: #0e4222;
+            margin-bottom: 0.4rem;
+        }
+
+        .recommend-content p {
+            font-size: 1.05rem;
+            color: #2b5635;
+            max-width: 800px;
+        }
+
+        .green-decor {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7db082, #3b7846, #7db082, transparent);
+            width: 80%;
+            margin: 2.5rem auto 1rem;
+            border-radius: 4px;
+        }
+
+        .footer-note {
+            margin-top: 4rem;
+            text-align: center;
+            color: #3b6b4b;
+            font-weight: 500;
+            background: #daf0da;
+            padding: 1.2rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            border: 1px solid #a0caa0;
+        }
+
+        .footer-note i {
+            color: #407d4e;
+            margin: 0 4px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1000px) {
+            .modules-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .carousel-slide h2 {
+                font-size: 2.2rem;
+            }
+            .site-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.8rem;
+            }
+            .logo-area {
+                justify-content: center;
+            }
+            .main-nav ul {
+                justify-content: center;
+            }
+            .auth-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+                padding: 0.8rem 1rem;
+            }
+            .top-bar-left, .top-bar-right {
+                justify-content: center;
+            }
+            .top-bar a {
+                margin: 0 0.5rem;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .container {
+                padding: 1rem 1rem 2rem;
+            }
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            .carousel {
+                height: 260px;
+            }
+            .carousel-slide h2 {
+                font-size: 1.8rem;
+            }
+            .carousel-slide p {
+                font-size: 1rem;
+                max-width: 90%;
+            }
+            .carousel-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+            }
+            .recommend-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.8rem 1rem;
+            }
+            .recommend-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            .module-card {
+                padding: 1rem;
+            }
+            .module-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主站点页头 (Logo、导航、登录) -->
+        <header class="site-header">
+            <a href="#" class="logo-area">
+                <span class="logo-icon"><i class="fas fa-leaf"></i></span>
+                <span class="logo-text">芯</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">自测</a></li>
+                    <li><a href="#">社区</a></li>
+                    <li><a href="#">咨询</a></li>
+                    <li><a href="#">客服</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+              <a href="auth.html?mode=login" class="btn-login">登录</a>
+              <a href="auth.html?mode=register" class="btn-signup">注册</a>
+            </div>
+        </header>
+
+        <!-- 轮播图区域 -->
+      <!-- 轮播图区域（可替换原有 .carousel 部分） -->
+<section class="carousel" aria-label="心理健康轮播图">
+    <div class="carousel-arrow carousel-arrow-left" id="prevSlide">
+        <i class="fas fa-chevron-left"></i>
+    </div>
+    <div class="carousel-arrow carousel-arrow-right" id="nextSlide">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div class="carousel-slides">
+        <div class="carousel-slide active">
+            <h2>拥抱内在 · 绿意心安</h2>
+            <p>专业心理支持 · 陪伴每一步</p>
+        </div>
+        <div class="carousel-slide">
+            <h2>倾听内心声音</h2>
+            <p>从这里开始自我关怀</p>
+        </div>
+        <div class="carousel-slide">
+            <h2>24小时陪伴</h2>
+            <p>心理热线 · 随时守候</p>
+        </div>
+    </div>
+
+    <div class="carousel-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+    </div>
+</section>
+
+<!-- 添加以下 CSS 样式到您已有的 <style> 中（或替换原有 .carousel-slide 相关样式） -->
+<style>
+    /* 覆盖原有的 .carousel-slide 样式，使其支持多图切换 */
+    .carousel {
+        position: relative;
+        width: 100%;
+        height: 340px;
+        border-radius: 32px;
+        overflow: hidden;
+        box-shadow: 0 12px 24px -8px rgba(30, 58, 46, 0.3);
+        margin-bottom: 3rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .carousel-slides {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.6s ease-in-out, visibility 0.6s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-shadow: 0 2px 6px #1e3a2e;
+        padding: 2rem;
+        background: radial-gradient(circle at 20% 40%, rgba(255,255,240,0.15) 0%, transparent 50%);
+        /* 保留原有渐变背景，也可以为每张幻灯片设置不同背景 */
+        background: linear-gradient(135deg, #5f9e6b, #2f6d4a); /* 统一使用原背景，也可以自定义 */
+    }
+
+    .carousel-slide.active {
+        opacity: 1;
+        visibility: visible;
+        position: relative; /* 取消绝对定位以正常显示，但为了保留叠放顺序，仍可保持absolute，通过z-index控制 */
+        z-index: 1;
+    }
+
+    /* 确保箭头和点位于上方 */
+    .carousel-arrow, .carousel-dots {
+        z-index: 10;
+    }
+
+    /* 其他原有样式保持不变（.carousel-arrow, .carousel-dots, .dot 等） */
+</style>
+
+<!-- 添加 JavaScript 实现轮播功能 -->
+<script>
+    (function() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        let currentIndex = 0;
+        let intervalId;
+
+        // 显示指定索引的幻灯片
+        function showSlide(index) {
+            // 边界处理：循环
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentIndex = index;
+        }
+
+        // 下一张
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        // 上一张
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        // 自动轮播
+        function startAutoPlay() {
+            intervalId = setInterval(nextSlide, 4000); // 每4秒切换
+        }
+
+        // 停止自动轮播（鼠标悬停时）
+        function stopAutoPlay() {
+            clearInterval(intervalId);
+        }
+
+        // 事件绑定
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoPlay();
+            startAutoPlay(); // 重新开始计时
+        });
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoPlay();
+            startAutoPlay();
+        });
+
+        // 点击指示点切换
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                showSlide(idx);
+                stopAutoPlay();
+                startAutoPlay();
+            });
+        });
+
+        // 鼠标悬停暂停自动播放
+        const carousel = document.querySelector('.carousel');
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        // 启动自动轮播
+        startAutoPlay();
+    })();
+</script>
+
+        <!-- 四大功能模块 -->
+        <section class="modules-grid" aria-label="主要功能模块">
+            <a href="#" class="module-card" aria-label="心理自测">
+                <div class="module-icon"><i class="fas fa-clipboard-list"></i></div>
+                <div class="module-text">
+                    <h3>自测</h3>
+                    <p>专业量表 · 匿名测评</p>
+                </div>
+            </a>
+            <a href="community.html" class="module-card" aria-label="交流社区">
+                <div class="module-icon"><i class="fas fa-users"></i></div>
+                <div class="module-text">
+                    <h3>社区</h3>
+                    <p>温暖互助 · 倾听故事</p>
+                </div>
+            </a>
+            <a href="consult.html" class="module-card" aria-label="心理咨询">
+                <div class="module-icon"><i class="fas fa-comment-dots"></i></div>
+                <div class="module-text">
+                    <h3>咨询</h3>
+                    <p>专家1v1 · 保密安全</p>
+                </div>
+            </a>
+            <a href="#" class="module-card" aria-label="在线客服">
+                <div class="module-icon"><i class="fas fa-headset"></i></div>
+                <div class="module-text">
+                    <h3>客服</h3>
+                    <p>7x24小时 · 随时响应</p>
+                </div>
+            </a>
+        </section>
+
+        <!-- 推荐内容区域 -->
+        <section class="recommend-section">
+            <h2 class="section-title">🌱 今日推荐</h2>
+            <div class="recommend-list">
+                <div class="recommend-item">
+                    <div class="recommend-icon"><i class="fas fa-heart-pulse"></i></div>
+                    <div class="recommend-content">
+                        <h4>缓解焦虑的五个 grounding 技巧</h4>
+                        <p>回到当下 · 简单易行的小练习，由心理师推荐</p>
+                    </div>
+                </div>
+                <div class="recommend-item">
+                    <div class="recommend-icon"><i class="fas fa-brain"></i></div>
+                    <div class="recommend-content">
+                        <h4>正念冥想：每日10分钟重启</h4>
+                        <p>跟着音频引导，培养内在平静</p>
+                    </div>
+                </div>
+                <div class="recommend-item">
+                    <div class="recommend-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <div class="recommend-content">
+                        <h4>如何支持有心理困扰的亲友</h4>
+                        <p>倾听 · 陪伴 · 不批判 —— 实用沟通指南</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="green-decor"></div>
+        <footer class="footer-note">
+            <i class="fas fa-leaf"></i> 芯 · 越用越懂你的私密心理伙伴 <i class="fas fa-leaf"></i>
+        </footer>
+    </div>
+</body>
+</html>

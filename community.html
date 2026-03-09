@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>芯 · 心理社区</title>
+    <!-- Font Awesome 6 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+        }
+
+        body {
+            background-color: #e6f3e6;
+            color: #1e3a2e;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 4rem;
+            position: relative;
+        }
+
+        /* 页头 */
+        .community-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            border: 2px solid #b1dfb1;
+        }
+        .community-header a {
+            color: #1b6231;
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .community-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1b4e2b;
+        }
+        .community-header i {
+            font-size: 1.6rem;
+            color: #3f8850;
+        }
+        .post-btn {
+            margin-left: auto;
+            background: linear-gradient(145deg, #3a8b4f, #1f6735);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: default;
+            border: 2px solid #b1e3b1;
+            box-shadow: 0 4px 12px #256b3980;
+        }
+
+        /* 帖子列表 */
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .post-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 1.6rem 2rem;
+            border: 2px solid #b1dfb1;
+            box-shadow: 0 10px 20px -8px #2f5a4b66;
+            transition: 0.15s;
+        }
+        .post-card:hover {
+            background: white;
+            border-color: #3f8850;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #daf4da, #b6e3b6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #20683b;
+            border: 2px solid white;
+        }
+        .author-info {
+            flex: 1;
+        }
+        .author-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1b4e2b;
+        }
+        .post-time {
+            font-size: 0.85rem;
+            color: #5a8f6a;
+        }
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 650;
+            color: #0e4222;
+            margin-bottom: 0.6rem;
+        }
+        .post-excerpt {
+            color: #2b5635;
+            margin-bottom: 1.2rem;
+        }
+        .post-stats {
+            display: flex;
+            gap: 1.5rem;
+            color: #3b6e4b;
+            font-size: 0.95rem;
+            border-top: 1px solid #c6e2c6;
+            padding-top: 0.8rem;
+        }
+        .post-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* ===== 水波积分悬浮球（圆形，带“积分”文字） ===== */
+        .floating-points {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0, 40, 0, 0.5);
+            border: 3px solid #d0efb1;
+            cursor: pointer;
+            z-index: 1000;
+            overflow: hidden;
+            background: #e0f0e0;         /* 水槽底色 */
+        }
+
+        #waveCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        /* 积分文字容器：垂直排列，数字 + 小字“积分” */
+        .points-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(2px);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid white;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .points-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3a2e;
+        }
+        .points-label {
+            font-size: 0.8rem;
+            color: #1e3a2e;
+            opacity: 0.9;
+        }
+
+        .floating-points:hover {
+            transform: scale(1.05);
+            transition: 0.2s;
+        }
+
+        /* 底部装饰 */
+        .footer-note {
+            margin-top: 3rem;
+            text-align: center;
+            color: #3b6b4b;
+            font-weight: 500;
+            background: #daf0da;
+            padding: 1rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            border: 1px solid #a0caa0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem 1rem 3rem;
+            }
+            .community-header {
+                flex-wrap: wrap;
+            }
+            .post-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            .floating-points {
+                width: 110px;
+                height: 110px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .points-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页头 -->
+        <div class="community-header">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> 返回首页</a>
+            <h1><i class="fas fa-users"></i> 心理社区</h1>
+            <div class="post-btn"><i class="fas fa-pen"></i> 发布</div>
+        </div>
+
+        <!-- 帖子列表（内容略） -->
+        <div class="post-list">
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                    <div class="author-info">
+                        <div class="author-name">阳光小草</div>
+                        <div class="post-time">2小时前 · 来自 焦虑互助圈</div>
+                    </div>
+                </div>
+                <div class="post-title">分享一个缓解焦虑的小方法： grounding 技术</div>
+                <div class="post-excerpt">当你感到焦虑时，试试5-4-3-2-1法则：说出你看到的5样东西、触摸到的4样东西、听到的3种声音、闻到的2种气味、尝到的1种味道...</p></div>
+                <div class="post-stats">
+                    <span><i class="far fa-heart"></i> 24</span>
+                    <span><i class="far fa-comment"></i> 7</span>
+                    <span><i class="far fa-bookmark"></i> 12</span>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                    <div class="author-info">
+                        <div class="author-name">夜听风吟</div>
+                        <div class="post-time">昨天 · 来自 抑郁康复小组</div>
+                    </div>
+                </div>
+                <div class="post-title">坚持正念冥想30天，我的变化</div>
+                <div class="post-excerpt">以前总是被负面思维缠绕，现在每天早晨冥想10分钟，情绪平稳了很多，也更能接纳自己了。推荐大家试试。</div>
+                <div class="post-stats">
+                    <span><i class="far fa-heart"></i> 56</span>
+                    <span><i class="far fa-comment"></i> 13</span>
+                    <span><i class="far fa-bookmark"></i> 24</span>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                    <div class="author-info">
+                        <div class="author-name">心理咨询师小陈</div>
+                        <div class="post-time">3天前 · 专业分享</div>
+                    </div>
+                </div>
+                <div class="post-title">如何帮助有自杀念头的朋友？</div>
+                <div class="post-excerpt">首先要保持冷静，直接询问但不要评判，倾听并表达关心，鼓励寻求专业帮助。最重要的是不要让他独自一人。</div>
+                <div class="post-stats">
+                    <span><i class="far fa-heart"></i> 128</span>
+                    <span><i class="far fa-comment"></i> 42</span>
+                    <span><i class="far fa-bookmark"></i> 67</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="footer-note">
+            <i class="fas fa-leaf"></i> 在这里，倾听与被倾听 <i class="fas fa-leaf"></i>
+        </div>
+
+        <!-- 水波积分悬浮球（圆形，带“积分”文字） -->
+        <div class="floating-points" id="pointsFloater">
+            <canvas id="waveCanvas" width="130" height="130"></canvas>
+            <div class="points-text">
+                <span class="points-number" id="pointsDisplay">50</span>
+                <span class="points-label">积分</span>
+            </div>
+        </div>
+    </div>
+
+<script>
+(function() {
+    const floater = document.getElementById('pointsFloater');
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+    const pointsDisplay = document.getElementById('pointsDisplay');
+
+    let points = 50;
+    const maxPoints = 100;
+    let waveOffset = 0;
+    let animationFrame;
+
+    function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        drawWave();
+    }
+
+    function drawWave() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        if (width === 0 || height === 0) return;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const percent = Math.min(points / maxPoints, 1.0);
+        const waterLevel = height * (1 - percent); // 水位线 y 坐标
+
+        // 圆形裁剪
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(width/2, height/2, width/2, 0, Math.PI * 2);
+        ctx.clip();
+
+        // 波浪参数（调小振幅，精细步长）
+        const waveAmplitude = 3;
+        const waveFrequency = 0.05;
+        const layers = 4;
+        const step = 3; // 步长 3px，更平滑
+
+        for (let i = 0; i < layers; i++) {
+            const alpha = 0.25 + 0.1 * i;
+            ctx.fillStyle = `rgba(46, 139, 86, ${alpha})`;
+
+            ctx.beginPath();
+            // 左边界水位线
+            ctx.moveTo(0, waterLevel);
+
+            // 绘制波浪线
+            for (let x = step; x <= width; x += step) {
+                const t = x / width;
+                const attenuation = Math.sin(Math.PI * t); // 边界衰减，使两端归零
+                const y = waterLevel + waveAmplitude * Math.sin(x * waveFrequency + waveOffset + i * 0.8) * attenuation;
+                ctx.lineTo(x, y);
+            }
+            // 精确连接右边界水位线
+            ctx.lineTo(width, waterLevel);
+
+            // 向下填充到底部
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+
+    function animate() {
+        waveOffset += 0.03; // 减慢流动速度
+        drawWave();
+        animationFrame = requestAnimationFrame(animate);
+    }
+
+    animate();
+    window.addEventListener('resize', resizeCanvas);
+
+    floater.addEventListener('click', function() {
+        points = Math.min(points + 10, maxPoints);
+        pointsDisplay.textContent = points;
+    });
+
+    resizeCanvas();
+
+    window.addEventListener('beforeunload', function() {
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>芯 · 登录 / 注册</title>
+    <!-- Font Awesome 6 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+        }
+
+        body {
+            background-color: #e6f3e6;
+            color: #1e3a2e;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 25px 40px -18px #1e4a2e;
+            border: 2px solid #b1dfb1;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2f6d4a;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            transition: 0.2s;
+            font-size: 1rem;
+            border: 1px solid #a8d5a8;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: #f0fff0;
+        }
+        .back-home i {
+            font-size: 0.9rem;
+        }
+        .back-home:hover {
+            background: #daf0da;
+            border-color: #2b7340;
+            color: #18522b;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2.2rem;
+            border-bottom: 2px solid #c6e2c6;
+            padding-bottom: 0.8rem;
+        }
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 0.8rem 0;
+            font-size: 1.4rem;
+            font-weight: 650;
+            color: #3b6e4b;
+            cursor: pointer;
+            border-radius: 40px 40px 0 0;
+            transition: 0.2s;
+            position: relative;
+            opacity: 0.6;
+        }
+        .tab-btn.active {
+            opacity: 1;
+            color: #1b6b3b;
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background: #3f8850;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .form-container {
+            transition: opacity 0.2s;
+        }
+        .form-container.hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #1f5436;
+            font-size: 0.95rem;
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #c6e2c6;
+            border-radius: 60px;
+            padding: 0.2rem 1rem;
+            transition: 0.2s;
+        }
+        .input-wrapper:focus-within {
+            border-color: #3f8850;
+            box-shadow: 0 0 0 4px rgba(80, 160, 90, 0.2);
+        }
+        .input-wrapper i {
+            color: #3f8850;
+            width: 24px;
+            font-size: 1.2rem;
+        }
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.9rem 0.5rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            outline: none;
+            color: #1e3a2e;
+        }
+        .input-wrapper input::placeholder {
+            color: #9bc09b;
+            font-weight: 300;
+        }
+
+        .extra-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0 2rem;
+            font-size: 0.9rem;
+        }
+        .extra-links a {
+            color: #2d6e42;
+            text-decoration: none;
+            border-bottom: 1px dashed #b1dfb1;
+        }
+        .extra-links a:hover {
+            color: #154d27;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(145deg, #3a8b4f, #1f6735);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 1rem;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px #256b3980;
+            transition: 0.15s;
+            border: 2px solid #b1e3b1;
+        }
+        .submit-btn:hover {
+            background: linear-gradient(145deg, #479e5d, #2a7a40);
+            transform: scale(1.01);
+            box-shadow: 0 12px 24px #1b542b;
+        }
+
+        .terms {
+            margin: 1.5rem 0 0.5rem;
+            font-size: 0.85rem;
+            color: #3b6b4b;
+            text-align: center;
+        }
+        .terms a {
+            color: #1f6735;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 2rem 1.2rem;
+            }
+            .tab-btn {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- 返回首页链接（确保文件名与首页一致） -->
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> 返回首页</a>
+
+        <!-- 选项卡 -->
+        <div class="tabs">
+            <button class="tab-btn active" id="tab-login">登录</button>
+            <button class="tab-btn" id="tab-register">注册</button>
+        </div>
+
+        <!-- 登录表单（无验证，无必需属性） -->
+        <div id="login-form" class="form-container">
+            <form>
+                <div class="form-group">
+                    <label>邮箱 / 用户名</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="请输入邮箱或用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="extra-links">
+                    <label><input type="checkbox" style="accent-color: #3f8850;"> 记住我</label>
+                    <a href="#">忘记密码？</a>
+                </div>
+                <button type="submit" class="submit-btn">登 录</button>
+            </form>
+        </div>
+
+        <!-- 注册表单（无验证，无必需属性） -->
+        <div id="register-form" class="form-container hidden">
+            <form>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="昵称或用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>电子邮箱</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="至少8位">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>确认密码</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="再次输入密码">
+                    </div>
+                </div>
+                <div class="terms">
+                    点击注册即表示同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a>
+                </div>
+                <button type="submit" class="submit-btn">注 册</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // 选项卡切换功能（保留）
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const loginFormDiv = document.getElementById('login-form');
+            const registerFormDiv = document.getElementById('register-form');
+
+            function showLogin(updateUrl = true) {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                loginFormDiv.classList.remove('hidden');
+                registerFormDiv.classList.add('hidden');
+                if (updateUrl) {
+                    const url = new URL(window.location);
+                    url.searchParams.set('mode', 'login');
+                    window.history.replaceState({}, '', url);
+                }
+            }
+
+            function showRegister(updateUrl = true) {
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+                registerFormDiv.classList.remove('hidden');
+                loginFormDiv.classList.add('hidden');
+                if (updateUrl) {
+                    const url = new URL(window.location);
+                    url.searchParams.set('mode', 'register');
+                    window.history.replaceState({}, '', url);
+                }
+            }
+
+            tabLogin.addEventListener('click', () => showLogin(true));
+            tabRegister.addEventListener('click', () => showRegister(true));
+
+            // 根据 URL 参数初始化显示
+            const urlParams = new URLSearchParams(window.location.search);
+            const mode = urlParams.get('mode');
+            if (mode === 'register') {
+                showRegister(false);
+            } else {
+                showLogin(false);
+                if (!mode) {
+                    // 清除可能残留的 mode 参数
+                    const url = new URL(window.location);
+                    if (url.searchParams.has('mode')) {
+                        url.searchParams.delete('mode');
+                        window.history.replaceState({}, '', url);
+                    }
+                }
+            }
+
+            // ===== 新增：纯静态登录/注册处理 =====
+            // 登录表单提交：弹出提示并跳转回首页
+            document.querySelector('#login-form form').addEventListener('submit', function(e) {
+                e.preventDefault();  // 阻止页面刷新
+                alert('登录成功！(演示)');
+                window.location.href = 'index.html';  // 跳转回首页（请确保文件名正确）
+            });
+
+            // 注册表单提交：弹出提示并跳转回首页
+            document.querySelector('#register-form form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('注册成功！(演示)');
+                window.location.href = 'index.html';
+            });
+        })();
+    </script>
+</body>
+</html>
