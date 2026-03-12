@@ -1,199 +1,92 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>芯 · 心理</title>
-    <!-- Font Awesome 6 图标库 -->
-    <link rel="icon" href="./icon/黑色单logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芯 · 心理</title>
+<link rel="icon" href="icon/黑色单logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/indexn.css">
+
 </head>
+
 <body>
-    <div class="container">
-        <!-- 主站点页头 (Logo、导航、登录) -->
-        <header class="site-header">
-            <a href="#" class="logo-area">
-                <span class="logo-icon">
-                    <img src="./icon/白色单logo.svg" alt="芯·心理 Logo" style="width: 100%; height: 100%; object-fit: contain;">
-                </span>
-                <span class="logo-text">芯</span>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">自测</a></li>
-                    <li><a href="#">社区</a></li>
-                    <li><a href="#">咨询</a></li>
-                    <li><a href="#">客服</a></li>
-                </ul>
-            </nav>
-            <div class="auth-buttons">
-                <a href="auth.html?mode=login" class="btn-login">登录</a>
-                <a href="auth.html?mode=register" class="btn-signup">注册</a>
-            </div>
-        </header>
+<img src="bg/太阳.png" class="top-bg">
 
-        <!-- 轮播图区域 -->
-        <section class="carousel" aria-label="心理健康轮播图">
-            <div class="carousel-arrow carousel-arrow-left" id="prevSlide">
-                <i class="fas fa-chevron-left"></i>
-            </div>
-            <div class="carousel-arrow carousel-arrow-right" id="nextSlide">
-                <i class="fas fa-chevron-right"></i>
-            </div>
+<header class="header">
+    <div class="logo">
+    <img src="icon/白色单logo.svg" class="logo-icon" alt="核心logo">
+    <img src="icon/白中文.svg" class="logo-font-svg" alt="装饰svg">
+    </div>
+        
+        <div class="menu">
+            <a href="#">工具</a>
+            <a href="#">客服</a>
+            <a href="#">更多</a>
+        </div>
 
-            <div class="carousel-slides">
-                <div class="carousel-slide active">
-                    <h2>拥抱内在 · 绿意心安</h2>
-                    <p>专业心理支持 · 陪伴每一步</p>
-                </div>
-                <div class="carousel-slide">
-                    <h2>倾听内心声音</h2>
-                    <p>从这里开始自我关怀</p>
-                </div>
-                <div class="carousel-slide">
-                    <h2>24小时陪伴</h2>
-                    <p>心理热线 · 随时守候</p>
-                </div>
-            </div>
+        <div class="auth">
+            <a href="login.html?mode=register" class="register">注册</a>
+            <a href="login.html?mode=login" class="login">登录</a>
 
-            <div class="carousel-dots">
-                <span class="dot active" data-index="0"></span>
-                <span class="dot" data-index="1"></span>
-                <span class="dot" data-index="2"></span>
-            </div>
-        </section>
+        </div>
+  
+</header>
 
-        <!-- 四大功能模块 -->
-        <section class="modules-grid" aria-label="主要功能模块">
-            <a href="#" class="module-card" aria-label="心理自测">
-                <div class="module-icon"><i class="fas fa-clipboard-list"></i></div>
-                <div class="module-text">
-                    <h3>自测</h3>
-                    <p>专业量表 · 匿名测评</p>
-                </div>
-            </a>
-            <a href="community.html" class="module-card" aria-label="交流社区">
-                <div class="module-icon"><i class="fas fa-users"></i></div>
-                <div class="module-text">
-                    <h3>社区</h3>
-                    <p>温暖互助 · 倾听故事</p>
-                </div>
-            </a>
-            <a href="consult.html" class="module-card" aria-label="心理咨询">
-                <div class="module-icon"><i class="fas fa-comment-dots"></i></div>
-                <div class="module-text">
-                    <h3>咨询</h3>
-                    <p>专家1v1 · 保密安全</p>
-                </div>
-            </a>
-            <a href="#" class="module-card" aria-label="在线客服">
-                <div class="module-icon"><i class="fas fa-headset"></i></div>
-                <div class="module-text">
-                    <h3>客服</h3>
-                    <p>7x24小时 · 随时响应</p>
-                </div>
-            </a>
-        </section>
 
-        <!-- 推荐内容区域 -->
-        <section class="recommend-section">
-            <h2 class="section-title">🌱 今日推荐</h2>
-            <div class="recommend-list">
-                <div class="recommend-item">
-                    <div class="recommend-icon"><i class="fas fa-heart-pulse"></i></div>
-                    <div class="recommend-content">
-                        <h4>缓解焦虑的五个 grounding 技巧</h4>
-                        <p>回到当下 · 简单易行的小练习，由心理师推荐</p>
-                    </div>
-                </div>
-                <div class="recommend-item">
-                    <div class="recommend-icon"><i class="fas fa-brain"></i></div>
-                    <div class="recommend-content">
-                        <h4>正念冥想：每日10分钟重启</h4>
-                        <p>跟着音频引导，培养内在平静</p>
-                    </div>
-                </div>
-                <div class="recommend-item">
-                    <div class="recommend-icon"><i class="fas fa-hand-holding-heart"></i></div>
-                    <div class="recommend-content">
-                        <h4>如何支持有心理困扰的亲友</h4>
-                        <p>倾听 · 陪伴 · 不批判 —— 实用沟通指南</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="green-decor"></div>
-        <footer class="footer-note">
-            <i class="fas fa-leaf"></i> 芯 · 越用越懂你的私密心理伙伴 <i class="fas fa-leaf"></i>
-        </footer>
+<section class="hero">
+    <img src="icon/白英文.svg" class="english">
+    <img src="photo/越用越懂你的私密心理伙伴.png" class="ziti">
+    <button class="enter" onclick="location.href='denglu.html'" >
+        <img src= "font/进入.png" alt="" style="width: 40px; height: 20px; vertical-align: middle;">
+        →</button>
+</section>
+<section class="middle-img">
+    <img src="bg/沙漏.png">
+</section>
+
+<section class="cards">
+
+    <div class="card">
+        <img src="photo/img1.png">
+        <h3>如何解决你的焦虑</h3>
+        <p>焦虑在人们的日常生活中不可缺少……</p>
     </div>
 
-    <!-- 轮播交互 JavaScript (保持不变) -->
-    <script>
-        (function() {
-            const slides = document.querySelectorAll('.carousel-slide');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.getElementById('prevSlide');
-            const nextBtn = document.getElementById('nextSlide');
-            let currentIndex = 0;
-            let intervalId;
+    <div class="card">
+        <img src="photo/img2.png">
+        <h3>今日推荐：享受生活</h3>
+        <p>你有多久没有沉浸在自己的生活中……</p>
+    </div>
 
-            function showSlide(index) {
-                if (index < 0) index = slides.length - 1;
-                if (index >= slides.length) index = 0;
+    <div class="card">
+        <img src="photo/img3.png">
+        <h3>缓解压力我有一计</h3>
+        <p>生活中总是充满各种各样的压力……</p>
+    </div>
 
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === index);
-                });
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
-                });
-                currentIndex = index;
-            }
+</section>
 
-            function nextSlide() {
-                showSlide(currentIndex + 1);
-            }
 
-            function prevSlide() {
-                showSlide(currentIndex - 1);
-            }
 
-            function startAutoPlay() {
-                intervalId = setInterval(nextSlide, 4000);
-            }
+<footer class="footer">
 
-            function stopAutoPlay() {
-                clearInterval(intervalId);
-            }
+<div class="footer-content">
 
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                stopAutoPlay();
-                startAutoPlay();
-            });
+<h3>芯 · 心理</h3>
 
-            dots.forEach((dot, idx) => {
-                dot.addEventListener('click', () => {
-                    showSlide(idx);
-                    stopAutoPlay();
-                    startAutoPlay();
-                });
-            });
+<p>越用越懂你的私密心理伙伴</p>
 
-            const carousel = document.querySelector('.carousel');
-            carousel.addEventListener('mouseenter', stopAutoPlay);
-            carousel.addEventListener('mouseleave', startAutoPlay);
+<p>邮箱：example@email.com</p>
 
-            startAutoPlay();
-        })();
-    </script>
+</div>
+
+<div class="copyright">
+
+<p>© 2026 芯平台团队 · All Rights Reserved</p>
+
+</div>
+
+</footer>
+
 </body>
 </html>
