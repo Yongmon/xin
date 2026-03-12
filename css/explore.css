@@ -1,0 +1,229 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 给body加顶部内边距，避免内容被fixed header遮挡 */
+body {
+  padding-top: 0px; /* 适配header高度 */
+  font-family: "Inter", sans-serif;
+  background:#11091F;
+}
+
+
+.top-bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:-1;
+}
+/*页头样式*/
+.header{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:15px 10%;
+
+background:#11091f;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+
+z-index:1000;
+
+}
+
+.slogan{
+
+width:320px;
+
+margin:30px 0;
+
+}
+
+/* Logo 容器自适应布局 */
+.logo {
+  font-weight:bold;
+  font-size:20px;
+  color:#9e6de7;
+  white-space: nowrap; /* 防止整体折行 */
+  display: flex;       /* 弹性布局，让SVG和文字对齐 */
+  align-items: center; /* 垂直居中 */
+  gap: 8px;            /* 元素间间距，替代margin更灵活 */
+  flex-shrink: 0;      /* 防止容器被挤压变形 */
+  padding: 2px 0;      /* 少量内边距，优化点击区域 */
+}
+
+/* 核心logo SVG 自适应 */
+.logo-icon {
+  width: clamp(24px, 3vw, 32px); /* 自适应尺寸：最小24px，最大32px，随屏幕宽度变化 */
+  height: auto;                  /* 保持SVG宽高比 */
+  object-fit: contain;           /* 防止SVG变形 */
+  /* SVG 颜色修改：核心属性（需SVG本身无内嵌fill颜色） */
+  fill: currentColor;            /* 继承父元素颜色（#9e6de7），也可直接写#9e6de7 */
+}
+
+/* 装饰性中文SVG 自适应 */
+.logo-font-svg {
+  width: clamp(40px, 5vw, 60px); /* 按比例自适应，比核心logo大 */
+  height: auto;
+  object-fit: contain;
+  /* 自定义SVG颜色（比如改成深灰色） */
+  fill: #333;
+  /* 可选：hover时变色 */
+  transition: fill 0.2s;
+}
+
+.logo:hover .logo-font-svg {
+  fill: #9e6de7; /* hover时和文字同色 */
+}
+
+/* 文字自适应（可选） */
+.logo-text {
+  font-size: clamp(16px, 2vw, 20px); /* 文字大小随屏幕自适应 */
+}
+
+/* 小屏幕适配（可选） */
+@media (max-width: 480px) {
+  .logo {
+    gap: 4px; /* 小屏幕缩小间距 */
+  }
+  .logo-font-svg {
+    width: clamp(30px, 4vw, 40px); /* 小屏幕进一步缩小装饰SVG */
+  }
+}
+
+nav a{
+
+margin:0 12px;
+text-decoration:none;
+color:#333;
+font-size:15px;
+
+}
+
+nav a:hover{
+
+color:#9e6de7;
+
+}
+
+/* 广告语区域基础样式 */
+.hero1 {
+  /* 铺满屏幕宽度，高度可根据需求调整（建议60-80vh） */
+  width: 100%;
+  height: 70vh;
+  /* 背景可选：纯色/渐变，适配你的网站风格 */
+  background:#11091f;
+  /* 核心：让内容垂直+水平居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 内边距，避免内容贴边 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 内容容器：限制最大宽度，避免大屏下文字太分散 */
+.hero1-content {
+  max-width: 800px;
+  /* 所有内容居中对齐 */
+  text-align: center;
+}
+
+/* 主标题：您 想 要 探 索 ？ */
+.hero1-title {
+  /* 黑体 */
+  font-family: "SimHei", "Microsoft YaHei", sans-serif;
+  /* 字体大小：响应式适配 */
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  /* 字间距，增强“您 想 要 探 索 ？”的视觉效果 */
+  letter-spacing: 0.5rem;
+  /* 颜色：适配你的主色，也可改为黑色 #000 */
+  color: white;
+  /* 加粗 */
+  font-weight: bold;
+  /* 与小字的间距 */
+  margin-bottom: 1.5rem;
+  /* 换行时也居中 */
+  line-height: 1.4;
+}
+
+/* 下方小字描述 */
+.hero1-subtitle {
+  font-family: "SimHei", "Microsoft YaHei", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #612ebb;
+  /* 行高，增强可读性 */
+  line-height: 1.6;
+  /* 与按钮的间距 */
+  margin-bottom: 3rem;
+  /* 最大宽度，避免文字过长 */
+  max-width: 600px;
+  /* 居中（当文字宽度小于容器时） */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 按钮容器：控制按钮间距 */
+.hero1-btn{
+  display: flex;
+  /* 按钮水平居中 */
+  justify-content: center;
+  /* 按钮间距 */
+  gap: 1.5rem;
+  /* 响应式适配：小屏幕换行 */
+  flex-wrap: wrap;
+}
+
+
+
+/* 1. 登录按钮：次要按钮（浅色边框） */
+.login-btn {
+  text-decoration:none;
+  background: #11091f;
+  color: white; /* 和主色一致 */
+  border: 1px solid #9e6de7; /* 边框区分 */
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap; /* 防止文字折行 */
+  transition: all 0.2s ease; /* 过渡动画，更丝滑 */
+  flex-shrink: 0;
+}
+
+.login-btn:hover {
+  background: #11091f; /* 浅蓝背景，hover反馈 */
+  border-color: #8759d8; /* 边框加深 */
+}
+
+/*返回*/
+.hero1-back {
+  text-decoration:none;
+  background: #9e6de7; /* 主色填充 */
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  /* 轻微阴影，突出主次 */
+  box-shadow: 0 2px 4px rgba(79, 109, 245, 0.2);
+}
+
+.hero1-back:hover {
+  background: #8759d8; /* 加深主色，hover反馈 */
+  box-shadow: 0 4px 8px rgba(79, 109, 245, 0.3); /* 阴影放大 */
+  transform: translateY(-1px); /* 轻微上浮，交互更生动 */
+}

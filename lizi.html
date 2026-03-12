@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芯 · 心理 - 粒子浮动背景</title>
+<link rel="icon" href="./icon/黑色单logo.svg" type="image/svg+xml">
+<style>
+/* 重置默认样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 粒子容器：全屏背景，层级低于所有内容 */
+#particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #f8f9fa; /* 页面底色，可根据你的网站调整 */
+  z-index: -1; /* 确保粒子在所有内容下方 */
+  overflow: hidden; /* 防止粒子溢出屏幕 */
+}
+
+/* 给body加顶部内边距，避免内容被fixed header遮挡 */
+body {
+  padding-top: 80px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ===== 原有导航栏样式（保留）===== */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 10%;
+  background:white;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  z-index:1000;
+}
+
+.logo {
+  font-weight:bold;
+  font-size:20px;
+  color:#4f6df5;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 2px 0;
+}
+
+nav a{
+  margin:0 12px;
+  text-decoration:none;
+  color:#333;
+  font-size:15px;
+}
+
+nav a:hover{
+  color:#4f6df5;
+}
+
+/* 按钮样式（保留） */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.login-btn {
+  background: white;
+  color: #4f6df5;
+  border: 1px solid #4f6df5;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.login-btn:hover {
+  background: #f5f7ff;
+  border-color: #3a57e8;
+}
+
+.register-btn {
+  background: #4f6df5;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(79, 109, 245, 0.2);
+  text-decoration: none;
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.register-btn:hover {
+  background: #3a57e8;
+  box-shadow: 0 4px 8px rgba(79, 109, 245, 0.3);
+  transform: translateY(-1px);
+}
+</style>
+</head>
+<body>
+<!-- 粒子容器（放在最顶部，不影响其他内容） -->
+<div id="particle-container"></div>
+
+<!-- 原有导航栏（保留） -->
+<header class="header">
+  <div class="logo">
+    <img src="/icon/黑色单logo.svg" class="logo-icon">
+    <span class="logo-text">芯 · 心理</span>
+    <img src="/font/中文.svg" class="logo-font-svg">
+  </div>
+  <nav>
+    <a href="#">首页</a>
+    <a href="#about">项目背景</a>
+    <a href="#solution">解决方案</a>
+    <a href="#features">核心功能</a>
+    <a href="#demo">Demo</a>
+    <a href="#team">团队</a>
+  </nav>
+  <div class="auth-buttons">
+    <a href="auth.html?mode=register" class="register-btn">注册</a>
+    <a href="auth.html?mode=login" class="login-btn">登录</a>
+  </div>
+</header>
+
+<!-- 页面内容（示例） -->
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+  <h1 style="color: #4f6df5; margin-bottom: 20px;">芯 · 心理 - 专业心理服务平台</h1>
+  <p style="line-height: 1.8; color: #333;">粒子浮动背景不会影响内容阅读和交互，轻量级实现，性能友好～</p>
+</div>
+
+<!-- 粒子效果JS（放在body最后，不阻塞页面加载） -->
+<script>
+// 粒子浮动效果核心代码
+class ParticleBackground {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.particleCount = Math.floor(window.innerWidth / 15); // 根据屏幕宽度自适应粒子数量
+    this.particles = [];
+    this.init();
+  }
+
+  // 初始化粒子
+  init() {
+    // 清空容器（防止重复创建）
+    this.container.innerHTML = '';
+    // 创建粒子
+    for (let i = 0; i < this.particleCount; i++) {
+      this.createParticle();
+    }
+    // 动画循环
+    requestAnimationFrame(() => this.animateParticles());
+  }
+
+  // 创建单个粒子
+  createParticle() {
+    const particle = document.createElement('div');
+    // 随机粒子样式
+    const size = Math.random() * 6 + 2; // 粒子大小：2-8px
+    const color = `rgba(79, 109, 245, ${Math.random() * 0.5 + 0.2})`; // 主色半透明
+    const x = Math.random() * 100; // 初始X位置（百分比）
+    const y = Math.random() * 100; // 初始Y位置（百分比）
+    const speedX = (Math.random() - 0.5) * 0.3; // X轴速度（-0.15 ~ 0.15）
+    const speedY = (Math.random() - 0.5) * 0.3; // Y轴速度（-0.15 ~ 0.15）
+
+    // 设置粒子样式
+    particle.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      border-radius: 50%;
+      left: ${x}%;
+      top: ${y}%;
+      opacity: ${Math.random() * 0.5 + 0.5};
+      transition: none;
+    `;
+
+    // 存储粒子状态
+    this.particles.push({
+      element: particle,
+      x,
+      y,
+      speedX,
+      speedY,
+      size,
+      opacity: particle.style.opacity
+    });
+
+    // 添加到容器
+    this.container.appendChild(particle);
+  }
+
+  // 粒子动画循环
+  animateParticles() {
+    this.particles.forEach(particle => {
+      // 更新位置
+      particle.x += particle.speedX;
+      particle.y += particle.speedY;
+
+      // 边界检测（超出屏幕后重置）
+      if (particle.x < 0 || particle.x > 100) particle.speedX *= -1;
+      if (particle.y < 0 || particle.y > 100) particle.speedY *= -1;
+
+      // 应用位置到DOM
+      particle.element.style.left = `${particle.x}%`;
+      particle.element.style.top = `${particle.y}%`;
+    });
+
+    // 持续动画
+    requestAnimationFrame(() => this.animateParticles());
+  }
+}
+
+// 页面加载完成后初始化粒子效果
+window.addEventListener('load', () => {
+  new ParticleBackground('particle-container');
+  // 窗口大小变化时重新初始化
+  window.addEventListener('resize', () => {
+    new ParticleBackground('particle-container');
+  });
+});
+</script>
+</body>
+</html>

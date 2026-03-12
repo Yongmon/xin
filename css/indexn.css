@@ -1,0 +1,288 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: "Inter", sans-serif;
+    background:#11091F;
+}
+
+.top-bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:-1;
+}
+
+
+/* 导航栏 */
+.header{
+    display: flex;
+    align-items: center;          /* 垂直居中 */
+    justify-content: space-between; 
+    width:100%;
+    padding:20px 80px;
+}
+/* Logo 容器自适应布局 */
+.logo {
+  font-weight:bold;
+  font-size:20px;
+  color:#9e6de7;
+  white-space: nowrap; /* 防止整体折行 */
+  display: flex;       /* 弹性布局，让SVG和文字对齐 */
+  align-items: center; /* 垂直居中 */
+  gap: 8px;            /* 元素间间距，替代margin更灵活 */
+  flex-shrink: 0;      /* 防止容器被挤压变形 */
+  padding: 2px 0;      /* 少量内边距，优化点击区域 */
+}
+
+/* 核心logo SVG 自适应 */
+.logo-icon {
+  width: clamp(24px, 3vw, 32px); /* 自适应尺寸：最小24px，最大32px，随屏幕宽度变化 */
+  height: auto;                  /* 保持SVG宽高比 */
+  object-fit: contain;           /* 防止SVG变形 */
+  /* SVG 颜色修改：核心属性（需SVG本身无内嵌fill颜色） */
+  fill: currentColor;            /* 继承父元素颜色（#9e6de7），也可直接写#9e6de7 */
+}
+
+/* 装饰性中文SVG 自适应 */
+.logo-font-svg {
+  width: clamp(40px, 5vw, 60px); /* 按比例自适应，比核心logo大 */
+  height: auto;
+  object-fit: contain;
+  /* 自定义SVG颜色（比如改成深灰色） */
+  fill: #333;
+  /* 可选：hover时变色 */
+  transition: fill 0.2s;
+}
+
+.logo:hover .logo-font-svg {
+  fill: #9e6de7; /* hover时和文字同色 */
+}
+
+/* 文字自适应（可选） */
+.logo-text {
+  font-size: clamp(16px, 2vw, 20px); /* 文字大小随屏幕自适应 */
+}
+
+/* 小屏幕适配（可选） */
+@media (max-width: 480px) {
+  .logo {
+    gap: 4px; /* 小屏幕缩小间距 */
+  }
+  .logo-font-svg {
+    width: clamp(30px, 4vw, 40px); /* 小屏幕进一步缩小装饰SVG */
+  }
+}
+.nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.menu a{
+    color:rgba(255,255,255,0.6);
+    margin:0 16px;
+    text-decoration:none;
+    position: center;
+}
+
+.auth{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.register{
+    color:white;   text-decoration: none;  
+}
+
+.login{
+    padding:8px 16px;   text-decoration: none;  
+    border:none;
+    border-radius:10px;
+    color:white;
+    background:linear-gradient(264deg,#622792,#1C0D48);
+}
+
+.middle-img{
+    text-align:center;
+    margin:80px 0;
+    margin-top:-170px;
+    position:relative;
+    z-index:-1;
+    overflow:hidden;   /* 防止页面被撑宽 */
+}
+
+
+.middle-img img{
+    width:120%;
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.sun{
+position:absolute;
+width:956px;
+height:871px;
+left:257px;
+top:-515px;
+}
+
+.rays{
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+
+background:
+conic-gradient(
+rgba(255,255,255,0.3) 0deg,
+transparent 20deg,
+rgba(255,255,255,0.2) 40deg,
+transparent 60deg,
+rgba(255,255,255,0.25) 80deg,
+transparent 100deg
+);
+
+filter:blur(80px);
+}
+
+.glow{
+position:absolute;
+width:100%;
+height:100%;
+background:#9E6DE7;
+border-radius:50%;
+filter:blur(150px);
+opacity:0.7;
+}
+
+/* 主标题 */
+.hero{
+    display: flex;
+    flex-direction: column;   /* 纵向排列 */
+    align-items: center;      /* 水平居中 */
+    gap: 20px;                /* 每一行之间的间距 */
+}
+
+.hero h1{
+    font-size:64px;
+    letter-spacing:6px;
+}
+.english{
+    margin-top: 100px;
+    margin-bottom: 30px; 
+}
+.ziti{
+    width: 800px;
+    height: auto;
+}
+.enter{
+    margin-top:20px;
+    padding:10px 30px;
+    border:none;
+    border-radius:12px;
+    background:rgba(130,109,231,0.6);
+    color:white;
+    font-size:18px;
+}
+
+
+.enter {
+  text-decoration:none;
+  background: rgba(130,109,231,0.6); /* 主色填充 */
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  /* 轻微阴影，突出主次 */
+  box-shadow: 0 2px 4px rgba(79, 109, 245, 0.2);
+}
+
+.enter:hover {
+  background: #8759d8; /* 加深主色，hover反馈 */
+  box-shadow: 0 4px 8px rgba(79, 109, 245, 0.3); /* 阴影放大 */
+  transform: translateY(-1px); /* 轻微上浮，交互更生动 */
+}
+
+
+/* 卡片 */
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+
+    position:relative;
+    z-index:2;
+
+    margin-top:-450px;
+}
+
+.card{
+    width:320px;
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+}
+.card:nth-child(2){
+    transform:translateY(-90px);
+}
+.card h3{
+    font-size:22px;
+    padding:16px;
+}
+
+.card p{
+    padding:0 16px 20px;
+    color:#666;
+}
+
+
+.footer{
+margin-top:20px;
+background:black;
+
+color:white;
+
+padding:40px 10%;
+
+text-align:center;
+
+}
+
+.footer-content{
+
+max-width:800px;
+
+margin:auto;
+
+line-height:1.8;
+
+}
+
+.copyright{
+
+margin-top:30px;
+
+font-size:14px;
+
+opacity:0.7;
+
+}
