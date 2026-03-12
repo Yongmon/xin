@@ -148,10 +148,8 @@ color:#9e6de7;
   z-index: 2;
 }
 
-
-
-/* 1. 登录按钮：次要按钮（浅色边框） */
-.login-btn {
+/* 返回按钮：次要按钮（浅色边框） */
+.back-btn {
   text-decoration:none;
   background: #11091f;
   color: white; /* 和主色一致 */
@@ -165,13 +163,13 @@ color:#9e6de7;
   flex-shrink: 0;
 }
 
-.login-btn:hover {
+.back-btn:hover {
   background: #11091f; /* 浅蓝背景，hover反馈 */
   border-color: #8759d8; /* 边框加深 */
 }
 
-/*返回*/
-.hero1-back {
+/*账户*/
+.account {
   text-decoration:none;
   background: #9e6de7; /* 主色填充 */
   color: white;
@@ -187,8 +185,80 @@ color:#9e6de7;
   box-shadow: 0 2px 4px rgba(79, 109, 245, 0.2);
 }
 
-.hero1-back:hover {
+.account:hover {
   background: #8759d8; /* 加深主色，hover反馈 */
   box-shadow: 0 4px 8px rgba(79, 109, 245, 0.3); /* 阴影放大 */
   transform: translateY(-1px); /* 轻微上浮，交互更生动 */
+}
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 四等分 */
+    gap: 10px;              /* 行列间距 */
+    max-width: 800px;       /* 可选：限制容器最大宽度，使整体居中 */
+    margin:-100px auto 0 auto; 
+    padding-bottom:120px; 
+}
+
+.card img {
+    width: 200%;
+    height: auto;
+    display: flex;
+}
+.card{
+    border-radius:16px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:all 0.35s ease;
+    position:relative;
+}
+
+.card img{
+    width:100%;
+    display:block;
+    transition:transform .4s;
+}
+.card:hover img{
+    transform:scale(1.08);
+}
+/* hover效果 */
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:
+    0 0 20px rgba(158,109,231,0.6),
+    0 0 40px rgba(158,109,231,0.4);
+}
+
+
+/* 小屏幕时改为两列或一列 */
+@media (max-width: 768px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.footer{
+margin-top:20px;
+background:black;
+
+color:white;
+
+padding:40px 10%;
+
+text-align:center;
+
+}
+
+.footer-content{
+
+max-width:800px;
+
+margin:auto;
+
+line-height:1.8;
+
 }
