@@ -2,16 +2,101 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>芯 · 心理</title>
 <link rel="icon" href="icon/黑色单logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/consult.css">
 </head>
 <body>
+    <img src="bg/左上角.png" class="top-bg">
     <header class="header">
     <img src="icon/白中文.svg" class="logo-font-c" alt="装饰svg1">
+    <img src="font/咨询.png" class="logo-font-c">
     <img src="icon/白英文.svg" class="logo-font-e" alt="装饰svg0">
     </header>
+
+        <!-- 主要聊天区域 -->
+    <main class="chat-main">
+        <!-- 左侧：最近消息列表 -->
+        <aside class="chat-sidebar">
+            <div class="sidebar-header">
+                <button class="back-btn" aria-label="返回" >
+                    
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="搜索消息...">
+                </div>
+            </div>
+            <div class="recent-list">
+                <div class="recent-item active">
+                    <img src="icon/白色单logo.svg" alt="头像" class="avatar">
+                    <div class="recent-info">
+                        <h4>芯</h4>
+                        <p>我想要咨询心理抑郁的问题</p>
+                    </div>
+                    <span class="time">13:25</span>
+                </div>
+                <div class="recent-item">
+                    <img src="bg/女医生.png" alt="头像" class="avatar">
+                    <div class="recent-info">
+                        <h4>陈医生</h4>
+                        <p>您好，请问你有什么需要d</p>
+                    </div>
+                    <span class="time">昨天</span>
+                </div>
+                <!-- 更多最近消息... -->
+            </div>
+        </aside>
+
+        <!-- 右侧：聊天主界面 -->
+        <section class="chat-area">
+            <!-- 状态栏 -->
+            <div class="chat-status-bar">
+                <div class="status-left">
+                    <span class="status-indicator online"></span>  <!-- 在线状态点 -->
+                    <span class="status-text">在线</span>
+                </div>
+                <div class="status-center">
+                    <span class="chat-name">芯</span>
+                    <span class="subtitle">当前聊天</span>
+                </div>
+                <div class="status-right">
+                    <img src="icon/白色单logo.svg" alt="对方头像" class="chat-avatar">
+                </div>
+            </div>
+
+            <!-- 消息记录区域 -->
+            <div class="messages-container" id="messageContainer">
+                <div class="message received">
+                    <img src="icon/白色单logo.svg" alt="头像" class="msg-avatar">
+                    <div class="msg-bubble">亲爱的用户你好，有什么需要我陪你的吗？</div>
+                    <span class="msg-time">13:23</span>
+                </div>
+                <div class="message sent">
+                    <img src="bg/user.png" alt="我的头像" class="msg-avatar"> 
+                    <div class="msg-bubble">我想要咨询心理抑郁的问题</div>
+                    <span class="msg-time">13:25</span>
+                   
+                </div>
+                <div class="message received">
+                    <img src="icon/白色单logo.svg" alt="头像" class="msg-avatar">
+                    <div class="msg-bubble">思考回答ing</div>
+                    <span class="msg-time">13:25</span>
+                </div>
+                <!-- 更多消息... -->
+            </div>
+
+            <!-- 消息输入框 -->
+            <div class="message-input-area">
+               <div class="input-box">
+                 <input type="text" id="messageInput" placeholder="输入消息...">
+                 <button class="send-btn" id="sendBtn">发送</button>
+               </div>
+            </div>
+        </section>
+    </main>
 
 
 <footer class="footer">
@@ -33,6 +118,86 @@
 </div>
 
 </footer>
+
+ <!-- 简单的JavaScript实现发送消息（静态演示，刷新后消失） -->
+    <script>
+        (function() {
+            // 获取DOM元素
+            const messageContainer = document.getElementById('messageContainer');
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+
+            // 发送消息函数
+            function sendMessage() {
+                const text = messageInput.value.trim();
+                if (text === '') return;  // 不发送空消息
+
+                // 创建新的消息div (自己发送，所以用sent类)
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message sent';
+
+                // 我的头像
+                const avatarImg = document.createElement('img');
+                avatarImg.src = 'bg/user.png';
+                avatarImg.alt = '我的头像';
+                avatarImg.className = 'msg-avatar';
+
+                // 气泡
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.className = 'msg-bubble';
+                bubbleDiv.textContent = text;
+
+                // 时间
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'msg-time';
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeSpan.textContent = `${hours}:${minutes}`;
+
+                // 按sent的结构依次添加：头像、气泡、时间 (因为flex-direction: row-reverse，顺序不影响视觉，但为了语义按DOM顺序)
+                newMessage.appendChild(avatarImg);
+                newMessage.appendChild(bubbleDiv);
+                newMessage.appendChild(timeSpan);
+
+                // 插入到容器中
+                messageContainer.appendChild(newMessage);
+
+                // 清空输入框
+                messageInput.value = '';
+
+                // 滚动到最新消息
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            // 绑定发送按钮点击事件
+            sendBtn.addEventListener('click', function(e) {
+                e.preventDefault();  // 防止任何可能的表单提交
+                sendMessage();
+            });
+
+            // 绑定回车键
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();  // 防止换行或提交
+                    sendMessage();
+                }
+            });
+
+           
+
+            // 左侧返回按钮演示
+            document.querySelector('.back-btn').addEventListener('click',function(){
+                        window.history.go(-1);
+                    })
+
+            // 搜索框演示（不实际搜索）
+            document.querySelector('.search-box input').addEventListener('input', function() {
+                // 静默，不做处理，仅展示
+            });
+        })();
+    </script>
+    <!-- 说明：这是一个静态演示页面，所有发送的消息只存在于当前DOM，刷新页面即重置。头像已为您在sent消息中添加。 -->
 </body>
 
 </html>
