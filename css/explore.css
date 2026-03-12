@@ -153,7 +153,7 @@ color:#9e6de7;
   text-decoration:none;
   background: #11091f;
   color: white; /* 和主色一致 */
-  border: 1px solid #9e6de7; /* 边框区分 */
+  border: 2px solid #8759d8; /* 边框区分 */
   padding: 10px 18px;
   border-radius: 12px;
   cursor: pointer;
@@ -162,10 +162,9 @@ color:#9e6de7;
   transition: all 0.2s ease; /* 过渡动画，更丝滑 */
   flex-shrink: 0;
 }
-
 .back-btn:hover {
   background: #11091f; /* 浅蓝背景，hover反馈 */
-  border-color: #8759d8; /* 边框加深 */
+  border-color: #9e6de7; /* 边框加深 */
 }
 
 /*账户*/

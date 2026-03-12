@@ -1,30 +1,146 @@
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    }
-
-   body{
-background:
-radial-gradient(circle 40vw at -10vw 30vh,rgba(165,116,255,0.8) 0%,transparent 70%),
-#11091f;
-
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-    body::after{
-content:"";
-position:fixed;
-inset:0;
 
-background-image:
-radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,0.3),transparent),
-radial-gradient(1px 1px at 70% 60%,rgba(255,255,255,0.25),transparent),
-radial-gradient(1px 1px at 40% 80%,rgba(255,255,255,0.2),transparent);
+/* 给body加顶部内边距，避免内容被fixed header遮挡 */
+body {
+  padding-top: relative; 
+  font-family: "Inter", sans-serif;
+  background:#11091F;
+}
 
-pointer-events:none;
+.top-bg{
+  position:absolute;
+  top:-100px;
+  left:0;
+  width:100%;
+  z-index:-1;
+}
+
+/*页头样式*/
+.header{
+    display: flex;
+    align-items: center;          /* 垂直居中 */
+    justify-content: space-between; 
+    width:100%;
+    padding:20px 80px;
+    z-index: 10;
+}
+
+.slogan{
+
+width:320px;
+
+margin:30px 0;
+
+}
+
+.logo-icon{
+width:clamp(24px,3vw,32px);
+height:auto;
+}
+
+.logo-font-e{
+width:clamp(80px,8vw,200px);
+height:auto;
+}
+
+.logo-font-c{
+width:clamp(50px,5vw,80px);
+height:auto;
+}
+
+
+
+
+/* 小屏幕适配（可选） */
+@media (max-width: 480px) {
+  .logo {
+    gap: 4px; /* 小屏幕缩小间距 */
+  }
+  .logo-font-svg {
+    width: clamp(30px, 4vw, 40px); /* 小屏幕进一步缩小装饰SVG */
+  }
+}
+
+nav a{
+
+margin:0 12px;
+text-decoration:none;
+color:#333;
+font-size:15px;
+
+}
+
+nav a:hover{
+
+color:#9e6de7;
+
+}
+
+/* 广告语区域基础样式 */
+.hero1 {
+  /* 铺满屏幕宽度，高度可根据需求调整（建议60-80vh） */
+  width: 100%;
+  height: 70vh;
+  margin-top: -120px;
+  /* 核心：让内容垂直+水平居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 内边距，避免内容贴边 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 内容容器：限制最大宽度，避免大屏下文字太分散 */
+.hero1-content {
+  max-width: 800px;
+  /* 所有内容居中对齐 */
+  text-align: center;
+}
+
+.hero1-title {
+  /* 黑体 */
+  font-family: "SimHei", "Microsoft YaHei", sans-serif;
+  /* 字体大小：响应式适配 */
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  /* 字间距，增强“请选择你要加入的社群”的视觉效果 */
+  letter-spacing: 0.5rem;
+  /* 颜色：适配你的主色，也可改为黑色 #000 */
+  color: white;
+  /* 加粗 */
+  font-weight: bold;
+  /* 与小字的间距 */
+  margin-bottom: 1.5rem;
+  /* 换行时也居中 */
+  line-height: 1.4;
+}
+
+
+
+
+
+.footer{
+margin-top:20px;
+background:black;
+
+color:white;
+
+padding:40px 10%;
+
+text-align:center;
+
+}
+
+.footer-content{
+
+max-width:800px;
+
+margin:auto;
+
+line-height:1.8;
+
 }
