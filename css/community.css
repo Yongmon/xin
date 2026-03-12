@@ -21,6 +21,8 @@ html, body {
 /* 内容区域：自动占满剩余空间，推挤页脚到底部 */
 .content-wrap {
   flex: 1;
+  position: relative;
+  z-index: 1;  /* 比 middle-img 的 z-index:0 高 */
 }
 
 /* 修复body内边距错误 */
@@ -103,15 +105,14 @@ nav a:hover{
   color:#9e6de7;
 }
 
-/* 广告语区域基础样式 - 修复负边距问题 */
+/* 广告语区域 */
 .hero {
   width: 100%;
-  height: 70vh;
-  margin-top: 0;
+  height: auto;           /* 不再固定高度 */
+  padding: 65px 35px 84px; /* 上下缩小间距 */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -180,15 +181,15 @@ nav a:hover{
 }
 
 /* 半圆图片区域 - 调整位置，避免遮挡卡片 */
-.middle-img{
-  position:absolute;
-  top:55vh;              /* 控制半圆位置 */
-  left:50%;
-  transform:translateX(-50%);
-  width:1300px;
-  max-width:none;
-  z-index:0;
-  pointer-events:none;   /* 防止挡住点击 */
+.middle-img {
+  position: fixed;        /* 脱离文档流，不占空间 */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1300px;
+  max-width: none;
+  z-index: 0;             /* 最底层 */
+  pointer-events: none;
 }
 
 .middle-img img{
