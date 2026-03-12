@@ -114,7 +114,7 @@ nav a:hover{
   padding: 20px;
   box-sizing: border-box;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* 内容容器：限制最大宽度，避免大屏下文字太分散 */
@@ -181,26 +181,25 @@ nav a:hover{
 
 /* 半圆图片区域 - 调整位置，避免遮挡卡片 */
 .middle-img{
-  text-align:center;
-  margin: 20px 0 0 0; /* 减少下边距，让卡片紧跟 */
-  position:relative;
-  z-index: 1; /* 低于卡片的z-index */
-  overflow:hidden;
+  position:absolute;
+  top:55vh;              /* 控制半圆位置 */
+  left:50%;
+  transform:translateX(-50%);
+  width:1300px;
+  max-width:none;
+  z-index:0;
+  pointer-events:none;   /* 防止挡住点击 */
 }
 
 .middle-img img{
-  width:120%;
-  position:relative;
-  left:50%;
-  transform:translateX(-50%);
-  max-width: 100vw; /* 防止超出屏幕 */
+  width:100%;
+  display:block;
 }
-
 /* 卡片整体容器 */
 .cards {
   max-width: 960px;
   width: 90%;
-  margin: 0 auto 80px auto;
+  margin: -20px auto 80px auto;
   display: grid;
   grid-template-areas:
     "card1 card1"
@@ -232,8 +231,11 @@ nav a:hover{
   height: 100%;
   object-fit: cover;
   display: block;
+  transition:transform .4s;
 }
-
+.card:hover img{
+    transform:scale(1.08);
+}
 /* 文字总容器：放在图片上 */
 .card-text {
   position: absolute;
@@ -277,7 +279,13 @@ nav a:hover{
   line-height: 1.5;
   text-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
-
+/* hover效果 */
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:
+    0 0 20px rgba(158,109,231,0.6),
+    0 0 40px rgba(158,109,231,0.4);
+}
 /* 页脚样式 - 确保在底部 */
 .footer{
   background:black;
