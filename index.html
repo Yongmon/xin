@@ -86,6 +86,31 @@
 
 </div>
 
+<div class="stats">
+  本站访问量 <span id="gc-visitors">加载中...</span> 次
+</div>
+
+<script data-goatcounter="https://yongmon.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+
+<small id="gc-count"></small>
+
+<script>
+window.goatcounter = {
+    path: function(p) { return location.pathname; }
+};
+
+fetch("https://yongmon.goatcounter.com/counter/TOTAL.json")
+.then(r => r.json())
+.then(data => {
+    document.getElementById("gc-count").innerText =
+        data.count + " 次访问";
+})
+.catch(() => {
+    document.getElementById("gc-count").innerText =
+        "统计加载失败";
+});
+</script>
 </footer>
 
 </body>
